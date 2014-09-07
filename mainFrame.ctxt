@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.params=btn\ txt1\ txt2\ area1\ area2\ area3
+comment0.target=mainFrame(javax.swing.JButton,\ javax.swing.JTextField,\ javax.swing.JTextField,\ javax.swing.JTextArea,\ javax.swing.JTextArea,\ javax.swing.JTextArea)
+comment0.text=\n\ Creates\ new\ form\ mainFrame\n
+comment1.params=btn\ txt1\ txt2\ area1\ area2\ area3
+comment1.target=void\ initComponents(javax.swing.JButton,\ javax.swing.JTextField,\ javax.swing.JTextField,\ javax.swing.JTextArea,\ javax.swing.JTextArea,\ javax.swing.JTextArea)
+numComments=2

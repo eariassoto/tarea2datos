@@ -1,0 +1,173 @@
+<!doctype html>
+<html class="no-js" lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Algoritmos de Ordenamiento</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <script src="js/vendor/modernizr.js"></script>
+    <!-- JqPlot-->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.jqplot.min.js"></script>
+    <script type="text/javascript" src="js/jqplot.barRenderer.min.js"></script>
+    <script type="text/javascript" src="js/jqplot.categoryAxisRenderer.min.js"></script>
+    <script type="text/javascript" src="js/jqplot.pointLabels.min.js"></script>
+  </head>
+  <body>
+
+
+    <div class="row">
+      <div id="main" class="large-12 columns">
+        <h1>Comparación de algoritmos de ordenamiento</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns panel">
+        <div class="large-6 columns">
+          Longitud de la lista: <input id="txtLen" type="text" name="">
+        </div>
+        <div class="large-6 columns">
+          Rango de números aleatorios: <input id="txtRan" type="text" name="">
+        </div>
+          <a href="#chart" id="btn" class="button">Mostrar resultados</a>     
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns">
+        <div id="chartTitle"></div>
+        <div id="chart" ></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns panel">
+        <h3>Lista original</h3>
+        <p id="lista_original"></p>
+        <h3>Lista ordenada</h3>
+        <p id="lista_ordenada"></p>
+      </div>
+    </div>
+
+    <footer class="row">
+      <hr/>
+      <div class="large-8 columns">
+        <p>Tarea Estructuras Datos y Análisis de Algoritmos. <a href="http://ecci.ucr.ac.cr/">CI 1221 ECCI UCR</a></p>
+      </div>
+      <div class="large-4 columns">
+        <p style="text-align: right"><a href="https://github.com/eariassoto/tarea2datos">View project on Github</a></p>
+      </div>
+    </footer>
+    <!--Foundation Framework-->
+    <script src="js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+    <!-- This is my code -->
+    <script type="text/javascript" src="sorting.js"></script>
+    <script type="text/javascript">
+
+      var makeList = function(l, len, ran){
+        for(i = 0; i < l.length; i++){
+          l[i] = new List(len);
+        }
+        for(j = 0; j < len; j++){
+          r = Math.floor((Math.random() * ran) + 1);
+          for(k = 0; k < l.length; k++){
+            l[k].addFirst(r);
+          }
+        }
+        return l;
+      }
+
+      var sortLists = function(l){
+        start = new Date();
+        sortByInsertion(l[0]);
+        timeInser = new Date() - start;
+      
+        start = new Date();
+        sortByShell(l[1]);
+        timeShell = new Date() - start;
+        
+        start = new Date();
+        sortBySelection(l[2]);
+        timeSelec = new Date() - start;
+        
+        start = new Date();
+        sortByBubble(l[3]);
+        timeBubb = new Date() - start;
+      
+        start = new Date();
+        sortBySelection(l[4]);
+        timeQuick = new Date() - start;
+        return [[timeInser, timeSelec, timeBubb, timeQuick, timeShell], ["Insertion", "Selection", "BubbleSort", "Quicksort", "ShellSort"]];
+      }
+
+      $(document).ready(function(){
+        $('body').scrollTo('#main');
+        
+        len = 1000;
+        ran = 10000;
+        listArr = [0,0,0,0,0];
+
+        listArr = makeList(listArr, len, ran);
+        $("#lista_original").append(listArr[0].print());
+      
+        $( "#txtLen" ).val(len);
+        $( "#txtRan" ).val(ran);
+
+        $( "#txtLen" ).change(function() {
+          if(!isNaN($( "#txtLen" ).val())){
+            len = $( "#txtLen" ).val();
+            listArr = makeList(listArr, len, ran);
+            $("#lista_original").text(listArr[0].print());
+            $("#lista_ordenada").text("");
+            $("#btn").show();
+          }
+        });
+
+        $( "#txtRan" ).change(function() {
+          if(!isNaN($( "#txtRan" ).val())){
+            ran = $( "#txtRan" ).val();
+            listArr = makeList(listArr, len, ran);
+            $("#lista_original").text(listArr[0].print());
+            $("#lista_ordenada").text("");
+            $("#btn").show();
+          }
+        });
+
+         $("#btn").click( function(){
+          infoSort = sortLists(listArr);
+          $("#lista_ordenada").append(listArr[4].print());
+
+          $( "#chart" ).empty();
+          $( "#chartTitle" ).empty();
+
+          $.jqplot.config.enablePlugins = true;
+          var s1 = [timeInser, timeSelec, timeBubb, timeQuick, timeShell];
+          var ticks = ['Inserción', 'Selección', 'Burbuja', 'Quicksort', 'Shell'];
+        
+          plot1 = $.jqplot('chart', [infoSort[0]], {
+            // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
+            animate: !$.jqplot.use_excanvas,
+            seriesDefaults:{
+              renderer:$.jqplot.BarRenderer,
+              pointLabels: { show: true }
+            },
+            axes: {
+              xaxis: {
+                renderer: $.jqplot.CategoryAxisRenderer,
+                ticks: infoSort[1]
+              }
+            },
+            highlighter: { show: false }
+          });
+          console.log($("#chart")); 
+          $("#chartTitle").append("<h4>Tiempo en ms.</h4>");
+          $("#btn").hide();
+        });
+      });
+    </script>
+  </body>
+</html>

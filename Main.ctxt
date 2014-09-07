@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=sortId\ l
+comment0.target=java.lang.String\ sortList(int,\ List)
+comment1.params=area
+comment1.target=void\ clean(javax.swing.JTextArea)
+comment2.params=length\ random\ l
+comment2.target=void\ initLists(int,\ int,\ List[])
+comment3.params=args
+comment3.target=void\ main(java.lang.String[])
+comment4.params=e
+comment4.target=void\ actionPerformed(java.awt.event.ActionEvent)
+comment5.params=evt
+comment5.target=void\ actionPerformed(java.awt.event.ActionEvent)
+numComments=6
