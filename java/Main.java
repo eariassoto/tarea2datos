@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 public class Main
 {
     static int length, random;
-    
+
     public static String sortList(int sortId, List l){
         long startTime;
         long endTime;
@@ -42,9 +42,9 @@ public class Main
             return "QuickSort time: " + (endTime - startTime) + " ms.\n";
             case 4:
             startTime = System.currentTimeMillis();
-            ListsSorter.sortByQuickSort(l);
+            ListsSorter.sortByShell(l);
             endTime = System.currentTimeMillis();
-            return "QuickSort time: " + (endTime - startTime) + " ms.\n";
+            return "ShellSort time: " + (endTime - startTime) + " ms.\n";
         }
         return "";
     }
@@ -52,7 +52,7 @@ public class Main
     public static void clean(JTextArea area){
         area.setText("");
     }
-    
+
     public static void initLists(int length, int random, List[] l){
         l[0] = new List(length);
         Random randomGenerator = new Random();
@@ -66,7 +66,7 @@ public class Main
         }
 
     }
-    
+
     public static void main(String args[]){
         JButton btn = new JButton();
         JTextField txtLength = new JTextField(),
@@ -75,8 +75,8 @@ public class Main
         areaSort = new JTextArea(),
         areaResult = new JTextArea();
 
-        length = 10;
-        random = 100;
+        length = 1000;
+        random = 2000;
 
         txtLength.setText(String.valueOf(length));
         txtRandom.setText(String.valueOf(random));
@@ -92,11 +92,10 @@ public class Main
                     String res = "";
                     for(int i = 0; i < listArr.length; i++){
                         res += sortList(i, listArr[i]);
-                        //System.out.println(listArr[i].print());
-                        
                     }     
-                    areaSort.setText(listArr[0].print() + "\n" + listArr[3].print());
+                    areaSort.setText(listArr[4].print());
                     areaResult.setText(res);
+                    btn.setEnabled(false);
                 }
             }); 
 
@@ -109,15 +108,31 @@ public class Main
                         areaOrig.setText(listArr[0].print());
                         clean(areaSort);
                         clean(areaResult);
+                        btn.setEnabled(true);
                     }catch(Exception e){
                     }
-                    
+
                 }
 
             });
 
+        txtRandom.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent evt) {
+                    try{
+                        int r = Integer.parseInt(evt.getActionCommand());
+                        random = r;
+                        initLists(length, random, listArr);
+                        areaOrig.setText(listArr[0].print());
+                        clean(areaSort);
+                        clean(areaResult);
+                        btn.setEnabled(true);
+                    }catch(Exception e){
+                    }
+
+                }
+
+            });
         mainFrame main = new mainFrame(btn, txtLength, txtRandom, areaOrig, areaSort, areaResult);
 
-            
     }
 }

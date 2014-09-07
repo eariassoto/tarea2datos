@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 /**
  * Write a description of class ListsSorter here.
  * 
@@ -94,5 +94,30 @@ public class ListsSorter
             Node prePivot = l.getNodePrev(start, pivotIndex);
             sortByQuickSort(l, start, prePivot);
         }
+    }
+
+    private static ArrayList<Integer> makeGaps(int l){
+        ArrayList<Integer> gaps = new ArrayList<Integer>();
+        int gap = l;
+        while(gap > 0){
+            gaps.add(gap);
+            gap = gap / 2;
+        }
+        return gaps;
+    }
+
+    public static List sortByShell(List l){
+        ArrayList<Integer> gaps = makeGaps(l.length);
+        for (int gap : gaps) {
+            for (int i = gap; i < l.length; i++){
+                int tmp = l.getValueByIndex(i);
+                int j;
+                for (j = i; j >= gap && l.getValueByIndex(j-gap) > tmp; j -= gap){
+                    l.modify(j, l.getValueByIndex(j - gap));
+                }
+                l.modify(j, tmp);
+            }
+        }       
+        return l;
     }
 }
