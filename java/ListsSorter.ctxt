@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.params=
+comment0.target=ListsSorter()
+comment1.params=l
+comment1.target=List\ sortByInsertion(List)
+comment2.params=l
+comment2.target=List\ sortByBubble(List)
+comment3.params=l
+comment3.target=List\ sortBySelection(List)
+comment4.params=n1\ n2
+comment4.target=void\ swap(Node,\ Node)
+comment5.params=start\ end
+comment5.target=Node\ sortPartition(Node,\ Node)
+comment6.params=l
+comment6.target=void\ sortByQuickSort(List)
+comment7.params=l\ start\ end
+comment7.target=void\ sortByQuickSort(List,\ Node,\ Node)
+comment8.params=l
+comment8.target=java.util.ArrayList\ makeGaps(int)
+comment9.params=l
+comment9.target=List\ sortByShell(List)
+numComments=10
